@@ -1,15 +1,9 @@
 package test.java.api;
 
-
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
-import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.specification.RequestSpecification;
-import io.restassured.specification.ResponseSpecification;
 import org.testng.annotations.BeforeClass;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
 
 
 public class TestBase {
@@ -17,8 +11,6 @@ public class TestBase {
     public String apiUri = "https://swapi.co/api";
     public RequestSpecBuilder apiRequestSpecBuilder = new RequestSpecBuilder();
     public RequestSpecification apiRequestSpec;
-    public ResponseSpecBuilder apiResponseBuilder = new ResponseSpecBuilder();
-    public ResponseSpecification apiResponseSpec;
 
     @BeforeClass
     public void baseSetUp(){

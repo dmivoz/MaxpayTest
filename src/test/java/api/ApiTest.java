@@ -1,8 +1,8 @@
 package test.java.api;
 
+import main.java.People;
+import main.java.Planet;
 import org.testng.annotations.Test;
-
-import java.util.ArrayList;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -10,50 +10,42 @@ import static org.hamcrest.CoreMatchers.hasItem;
 
 public class ApiTest extends TestBase {
 
-    private String homeworld;
-    private ArrayList<String> films;
+    private People luke;
+    private Planet planet;
 
     @Test
     public void findLuke() {
-        homeworld = given().
+        luke = given().
                 spec(apiRequestSpec).
-                log().all().
                 when().
                 get(apiUri + "/people/1/").
                 then().
                 statusCode(200).
                 body("name", equalTo("Luke Skywalker")).
-                log().all().
-                extract().
-                path("homeworld");
+                extract().response().as(People.class);
     }
 
     @Test(dependsOnMethods = "findLuke")
-    public void checkLukesPlanet() {
-        films = given().
-                log().all().
+    public void findLukesPlanet() {
+        planet = given().
                 when().
-                get(homeworld).
+                get(luke.getHomeworld()).
                 then().
                 statusCode(200).
                 body("name", equalTo("Tatooine")).
                 body("population", equalTo("200000")).
-                log().all().
-                extract().
-                path("films");
+                extract().response().as(Planet.class);
     }
 
-    @Test(dependsOnMethods = "checkLukesPlanet")
+    @Test(dependsOnMethods = "findLukesPlanet")
     public void checkFilm() {
         given().
-                log().all().
                 when().
-                get(films.get(0)).
+                get(planet.getFilms().get(0)).
                 then().
                 statusCode(200).
                 body("title", equalTo("Attack of the Clones")).
-                body("characters", hasItem(apiUri+"/people/1/")).
-                body("planets", hasItem(apiUri+"/planets/1/")).
-                log().all();
+                body("planets", hasItem(planet.getUrl())).
+                body("characters", hasItem(luke.getUrl()));
     }
 }
