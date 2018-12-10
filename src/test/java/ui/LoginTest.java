@@ -1,6 +1,8 @@
 package test.java.ui;
 import com.codeborne.selenide.Configuration;
 import org.testng.annotations.*;
+import test.java.ui.pages.HeaderComponent;
+import test.java.ui.pages.LoginPage;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;

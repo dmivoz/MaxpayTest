@@ -1,4 +1,4 @@
-package test.java.ui;
+package test.java.ui.pages;
 
 import com.codeborne.selenide.SelenideElement;
 

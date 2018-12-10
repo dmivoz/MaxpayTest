@@ -1,7 +1,7 @@
 package test.java.api;
 
-import main.java.People;
-import main.java.Planet;
+import main.java.model.People;
+import main.java.model.Planet;
 import org.testng.annotations.Test;
 
 import static io.restassured.RestAssured.given;
@@ -14,7 +14,7 @@ public class ApiTest extends TestBase {
     private Planet planet;
 
     @Test
-    public void findLuke() {
+    public void lukeSkywalkerCanByFoundById() {
         luke = given().
                 spec(apiRequestSpec).
                 when().
@@ -25,8 +25,8 @@ public class ApiTest extends TestBase {
                 extract().response().as(People.class);
     }
 
-    @Test(dependsOnMethods = "findLuke")
-    public void findLukesPlanet() {
+    @Test(dependsOnMethods = "lukeSkywalkerCanByFoundById")
+    public void planetCanBeFoundById() {
         planet = given().
                 when().
                 get(luke.getHomeworld()).
@@ -37,8 +37,8 @@ public class ApiTest extends TestBase {
                 extract().response().as(Planet.class);
     }
 
-    @Test(dependsOnMethods = "findLukesPlanet")
-    public void checkFilm() {
+    @Test(dependsOnMethods = "planetCanBeFoundById")
+    public void filmCanBeFoundById() {
         given().
                 when().
                 get(planet.getFilms().get(0)).
