@@ -14,7 +14,7 @@ public class ApiTest extends TestBase {
     private Planet planet;
 
     @Test
-    public void lukeSkywalkerCanByFoundById() {
+    public void lukeSkywalkerCanBeFoundById() {
         luke = given().
                 spec(apiRequestSpec).
                 when().
@@ -25,7 +25,7 @@ public class ApiTest extends TestBase {
                 extract().response().as(People.class);
     }
 
-    @Test(dependsOnMethods = "lukeSkywalkerCanByFoundById")
+    @Test(dependsOnMethods = "lukeSkywalkerCanBeFoundById")
     public void planetCanBeFoundById() {
         planet = given().
                 when().
